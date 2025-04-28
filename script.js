@@ -1,28 +1,51 @@
 function calculateDogNutrition(age, breed, weightPounds, activityLevel) {
+  let dailyKcalNeeds;
   const kgPerPound = 2.2;
   const kcalPerCup = 515;
   const cupsPerBag = 54;
   const bagCost = 89;
-
   const weightKg = weightPounds / kgPerPound;
-
-  let dailyKcalNeeds;
+  const puppyKValues = {
+    small: {
+      "0.2115": 375,
+      "1.3333": 350,
+      "2.3333": 225,
+      "4": 160,
+      "Infinity": 132
+    },
+    medium: {
+      "0.2115": 375,
+      "1.3333": 350,
+      "2.3333": 225,
+      "4": 160,
+      "Infinity": 132
+    },
+    large: {
+      "0.2115": 340,
+      "1.3333": 300,
+      "2.3333": 200,
+      "4": 160,
+      "Infinity": 132
+    },
+    giant: {
+      "0.2115": 340,
+      "1.3333": 300,
+      "2.3333": 200,
+      "4": 160,
+      "Infinity": 132
+    }
+  };
 
   if (age <= 1) {
-    let kValue;
-
-    if (breed === "small" || breed === "medium") {
-      if (age <= 11 / 52) kValue = 375;
-      else if (age <= 4 / 3) kValue = 350;
-      else if (age <= 7 / 3) kValue = 225;
-      else if (age <= 12 / 3) kValue = 160;
-      else kValue = 132;
-    } else if (breed === "large" || breed === "giant") {
-      if (age <= 11 / 52) kValue = 340;
-      else if (age <= 4 / 3) kValue = 300;
-      else if (age <= 7 / 3) kValue = 200;
-      else if (age <= 12 / 3) kValue = 160;
-      else kValue = 132;
+    let kValue = 132;
+    if (puppyKValues.hasOwnProperty(breed)) {
+      const breedValues = puppyKValues[breed];
+      for (let ageThreshold in breedValues) {
+        if (age <= parseFloat(ageThreshold)) {
+          kValue = breedValues[ageThreshold];
+          break;
+        }
+      }
     }
 
     dailyKcalNeeds = Math.pow(weightKg, 0.67) * kValue;
@@ -32,11 +55,8 @@ function calculateDogNutrition(age, breed, weightPounds, activityLevel) {
   }
 
   const cupsPerDay = dailyKcalNeeds / kcalPerCup;
-
   const cupsPerMeal = cupsPerDay / 2;
-
   const daysPerBag = cupsPerBag / cupsPerDay;
-
   const costPerDay = bagCost / daysPerBag;
 
   return {
@@ -45,6 +65,7 @@ function calculateDogNutrition(age, breed, weightPounds, activityLevel) {
     cupsPerMeal: cupsPerMeal.toFixed(2),
     daysPerBag: daysPerBag.toFixed(2),
     costPerDay: costPerDay.toFixed(2),
+    activityLevel: activityLevel
   };
 }
 
