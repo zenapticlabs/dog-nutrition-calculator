@@ -1,74 +1,131 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+<head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Dog Nutrition Calculator</title>
     <style>
-      body {
-        font-family: sans-serif;
-      }
-      .container {
-        width: 300px;
-        margin: 20px auto;
-        border: 1px solid #ccc;
-        padding: 15px;
-      }
-      label {
-        display: block;
-        margin-bottom: 5px;
-      }
-      input,
-      select {
-        width: 100%;
-        padding: 5px;
-        margin-bottom: 10px;
-      }
-      button {
-        width: 100%;
-        padding: 10px;
-        background-color: #4caf50;
-        color: white;
-        border: none;
-        cursor: pointer;
-      }
-      #results {
-        margin-top: 20px;
-        border-top: 1px solid #eee;
-        padding-top: 10px;
-      }
+        body {
+            font-family: sans-serif;
+        }
+
+        .container {
+            width: 350px;
+            margin: 20px auto;
+            border: 1px solid #ccc;
+            padding: 15px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        input,
+        select {
+            width: 100%;
+            padding: 5px;
+            margin-bottom: 10px;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #4caf50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        #results {
+            margin-top: 20px;
+            border-top: 1px solid #eee;
+            padding-top: 10px;
+        }
+
+        #age-input-container {
+            display: flex;
+            align-items: center;
+        }
+
+        #age-years {
+            width: 60px;
+            margin-right: 5px;
+        }
+
+        #age-months {
+            width: 120px;
+            margin-right: 5px;
+        }
+
+        #age-weeks {
+            width: 150px;
+        }
     </style>
-  </head>
-  <body>
+</head>
+
+<body>
     <div class="container">
-      <h2>Dog Nutrition Calculator</h2>
-      <label for="age">Age (years):</label>
-      <input type="number" id="age" min="0" step="0.1" required />
+        <h2>Dog Nutrition Calculator</h2>
 
-      <label for="breed">Breed:</label>
-      <select id="breed" required>
-        <option value="">Select...</option>
-        <option value="small">Small</option>
-        <option value="medium">Medium</option>
-        <option value="large">Large</option>
-        <option value="giant">Giant</option>
-      </select>
+        <label for="age-years">Age:</label>
+        <div id="age-input-container">
+            <input type="number" id="age-years" name="age-years" min="0" max="30" placeholder="Years" />
+            <select id="age-months" name="age-months">
+                <option value="0">Months (Optional)</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
+                <option value="9">9</option>
+                <option value="10">10</option>
+                <option value="11">11</option>
+            </select>
+            <select id="age-weeks" name="age-weeks">
+                <option value="0">Weeks (Optional)</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
+                <option value="9">9</option>
+                <option value="10">10</option>
+                <option value="11">11</option>
+            </select>
+        </div>
 
-      <label for="weight">Weight (pounds):</label>
-      <input type="number" id="weight" min="0" required />
+        <label for="breed">Breed:</label>
+        <select id="breed" required>
+            <option value="">Select...</option>
+            <option value="small">Small</option>
+            <option value="medium">Medium</option>
+            <option value="large">Large</option>
+            <option value="giant">Giant</option>
+        </select>
 
-      <label for="activity">Activity Level:</label>
-      <select id="activity" required>
-        <option value="">Select...</option>
-        <option value="less active">Less Active</option>
-        <option value="very active">Very Active</option>
-      </select>
+        <label for="weight">Weight (pounds):</label>
+        <input type="number" id="weight" min="0" required />
 
-      <button onclick="calculateAndDisplay()">Calculate</button>
+        <label for="activity">Activity Level:</label>
+        <select id="activity" required>
+            <option value="">Select...</option>
+            <option value="less active">Less Active</option>
+            <option value="very active">Active</option>
+        </select>
 
-      <div id="results"></div>
+        <button onclick="calculateAndDisplay()">Calculate</button>
+
+        <div id="results"></div>
     </div>
 
     <script src="script.js"></script>
-  </body>
+</body>
+
 </html>
