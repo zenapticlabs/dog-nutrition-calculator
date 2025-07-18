@@ -24,7 +24,7 @@ function calculateDogNutrition(
   }
 
   if (totalAgeMonths < 12) {
-    let kValue = 132;
+    let kValue;
 
     if (breed === "small" || breed === "medium") {
       if (totalAgeMonths <= 2.53) {
@@ -49,7 +49,23 @@ function calculateDogNutrition(
     }
     dailyKcalNeeds = Math.pow(weightKg, 0.67) * kValue;
   } else {
-    let kcalCoefficient = activityLevel === "less active" ? 99 : 132;
+    let kcalCoefficient;
+    switch (activityLevel) {
+      case "less active":
+        kcalCoefficient = 67.5;
+        break;
+      case "active":
+        kcalCoefficient = 90;
+        break;
+      case "more active":
+        kcalCoefficient = 110;
+        break;
+      case "very active":
+        kcalCoefficient = 132;
+        break;
+      default:
+        kcalCoefficient = 99;
+    }
     dailyKcalNeeds = Math.pow(weightKg, 0.67) * kcalCoefficient;
   }
 
@@ -81,33 +97,26 @@ function calculateAndDisplay() {
   let ageWeeks = ageWeeksInput ? parseInt(ageWeeksInput) : null;
 
   let isAgeValid = false;
-  if ((ageYears !== null && ageMonths !== null) || ageWeeks !== null) {
-    if (ageWeeks !== null && ageWeeks >= 0 && ageWeeks <= 52) {
+
+  if (
+    (ageYears !== null && ageYears >= 0 && ageYears <= 30) ||
+    (ageMonths !== null && ageMonths >= 0 && ageMonths <= 11) ||
+    (ageWeeks !== null && ageWeeks >= 0 && ageWeeks <= 52)
+  ) {
+    // If only years is provided, it's valid.
+    if (ageYears !== null && ageMonths === null && ageWeeks === null) {
       isAgeValid = true;
-    } else if (
-      ageYears !== null &&
-      ageYears >= 0 &&
-      ageYears <= 30 &&
-      ageMonths !== null &&
-      ageMonths >= 0 &&
-      ageMonths <= 11
-    ) {
+    }
+    // If years and months are provided, it's valid.
+    else if (ageYears !== null && ageMonths !== null && ageWeeks === null) {
       isAgeValid = true;
-    } else if (
-      ageYears !== null &&
-      ageYears >= 0 &&
-      ageYears <= 30 &&
-      ageMonths === null &&
-      ageWeeks === null
-    ) {
+    }
+    // If only weeks is provided, it's valid.
+    else if (ageWeeks !== null && ageYears === null && ageMonths === null) {
       isAgeValid = true;
-    } else if (
-      ageWeeks !== null &&
-      ageYears === null &&
-      ageMonths === null &&
-      ageWeeks >= 0 &&
-      ageWeeks <= 52
-    ) {
+    }
+    // If weeks is provided along with years/months, prioritize weeks for puppy calculation, but still valid.
+    else if (ageWeeks !== null && (ageYears !== null || ageMonths !== null)) {
       isAgeValid = true;
     }
   }
